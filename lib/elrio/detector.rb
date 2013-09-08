@@ -14,15 +14,18 @@ module Elrio
         prev = array[i]
       end
 
-      return [0, 0] if runs.count == 1
-
       longest_run_length = runs.max
 
       return [array.count, 0] if longest_run_length == 1
 
       longest_run_index = runs.index(longest_run_length)
 
-      run_start = runs[0, longest_run_index].reduce(:+)
+      if longest_run_index > 0
+        run_start = runs[0, longest_run_index].reduce(:+)
+      else
+        run_start = 0
+      end
+
       run_end = run_start + longest_run_length
 
       [

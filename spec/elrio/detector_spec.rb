@@ -19,12 +19,22 @@ describe Elrio::Detector do
 
     it "does not fail with a single-item collection" do
       data = %w(A)
-      subject.detect(data).should == [0, 0]
+      subject.detect(data).should == [1, 0]
     end
 
     it "can handle multiple runs" do
       data = %w(A A A B C - - - - - D E F F F)
       subject.detect(data).should == [5, 5]
+    end
+
+    it "can handle longest runs at the beginning" do
+      data = %w(- - - A)
+      subject.detect(data).should == [0, 1]
+    end
+
+    it "can handle longest runs at the end" do
+      data = %w(A - - -)
+      subject.detect(data).should == [1, 0]
     end
   end
 end
