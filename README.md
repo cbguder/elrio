@@ -2,6 +2,9 @@
 
 Cap inset detector & optimizer for resizable UIKit assets.
 
+[![Code Climate](https://codeclimate.com/github/cbguder/elrio.png)](https://codeclimate.com/github/cbguder/elrio)
+[![Build Status](https://travis-ci.org/cbguder/elrio.png)](https://travis-ci.org/cbguder/elrio)
+
 ## Installation
 
 Add this line to your application's Gemfile:
