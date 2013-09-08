@@ -5,13 +5,8 @@ module Elrio
     def detect_cap_insets(path)
       img = ChunkyPNG::Image.from_file(path)
 
-      columns = (0...img.width).map do |x|
-        img.column(x)
-      end
-
-      rows = (0...img.height).map do |y|
-        img.row(y)
-      end
+      columns = (0...img.width).map {|x| img.column(x) }
+      rows = (0...img.height).map {|y| img.row(y) }
 
       detector = Detector.new
 
