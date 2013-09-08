@@ -1,6 +1,6 @@
 # Elrio
 
-TODO: Write a gem description
+Cap inset detector & optimizer for resizable UIKit assets.
 
 ## Installation
 
@@ -18,7 +18,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+    $ elrio IMAGE
 
 ## Contributing
 

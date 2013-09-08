@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.version       = Elrio::VERSION
   spec.authors       = ["Can Berk Güder"]
   spec.email         = ["cbguder@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
-  spec.homepage      = ""
+  spec.description   = "Cap inset detector & optimizer for resizable UIKit assets."
+  spec.summary       = "Cap inset detector & optimizer for resizable UIKit assets."
+  spec.homepage      = "https://github.com/cbguder/elrio"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
