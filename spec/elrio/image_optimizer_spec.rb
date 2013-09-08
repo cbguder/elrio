@@ -24,5 +24,13 @@ describe Elrio::ImageOptimizer do
     it "passes the rows and columns to the detector" do
       subject.detect_cap_insets(path).should == [1, 2, 3, 4]
     end
+
+    context "with a retina image" do
+      let(:path) { "file/path@2x.png" }
+
+      it "halves the cap insets" do
+        subject.detect_cap_insets(path).should == [1, 1, 2, 2]
+      end
+    end
   end
 end
