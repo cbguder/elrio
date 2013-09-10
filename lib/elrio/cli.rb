@@ -5,10 +5,11 @@ module Elrio
     end
 
     def run(args)
-      optimizer = ImageOptimizer.new
+      runner = Runner.new
+      cmd = args.shift
 
       args.each do |path|
-        insets = optimizer.detect_cap_insets(path)
+        insets = runner.send(cmd, path)
         @output.puts "#{path}: #{insets}"
       end
     end

@@ -1,6 +1,6 @@
 module Elrio
-  class Detector
-    def detect(array)
+  class CapInsetDetector
+    def detect_cap_insets(array)
       prev = array.first
       runs = [1]
 

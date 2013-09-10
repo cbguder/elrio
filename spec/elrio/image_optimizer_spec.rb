@@ -2,8 +2,7 @@ require "spec_helper"
 
 describe Elrio::ImageOptimizer do
   describe "#detect_cap_insets" do
-    let(:path) { "file/path.png" }
-    let(:detector) { double(Elrio::Detector) }
+    let(:cap_inset_detector) { double(Elrio::CapInsetDetector) }
     let(:image) { double(ChunkyPNG::Image) }
     let(:columns) { [double] * 5 }
     let(:rows) { [double] * 3 }
@@ -14,22 +13,47 @@ describe Elrio::ImageOptimizer do
       image.stub(:column) {|x| columns[x] }
       image.stub(:row) {|x| rows[x] }
 
-      detector.stub(:detect).with(rows).and_return([1, 3])
-      detector.stub(:detect).with(columns).and_return([2, 4])
+      cap_inset_detector.stub(:detect_cap_insets).with(rows).and_return([1, 3])
+      cap_inset_detector.stub(:detect_cap_insets).with(columns).and_return([2, 4])
 
-      Elrio::Detector.stub(:new).and_return(detector)
-      ChunkyPNG::Image.stub(:from_file).with(path).and_return(image)
+      Elrio::CapInsetDetector.stub(:new).and_return(cap_inset_detector)
     end
 
-    it "passes the rows and columns to the detector" do
-      subject.detect_cap_insets(path).should == [1, 2, 3, 4]
+    context "in non-retina mode" do
+      it "passes the rows and columns to the detector" do
+        subject.detect_cap_insets(image).should == Elrio::Insets.new(1, 2, 3, 4)
+      end
     end
 
-    context "with a retina image" do
-      let(:path) { "file/path@2x.png" }
+    context "in retina mode" do
+      subject { Elrio::ImageOptimizer.new(true) }
 
       it "halves the cap insets" do
-        subject.detect_cap_insets(path).should == [1, 1, 2, 2]
+        subject.detect_cap_insets(image).should == Elrio::Insets.new(1, 1, 2, 2)
+      end
+    end
+  end
+
+  describe "#optimize" do
+    let(:image) { ChunkyPNG::Image.from_file("spec/fixtures/original.png") }
+
+    context "in non-retina mode" do
+      let(:expected) { ChunkyPNG::Image.from_file("spec/fixtures/optimized.png") }
+
+      it "foo" do
+        optimized = subject.optimize(image, Elrio::Insets.new(48, 48, 48, 48))
+        optimized.should == expected
+      end
+    end
+
+    context "in retina mode" do
+      let(:expected) { ChunkyPNG::Image.from_file("spec/fixtures/optimized@2x.png") }
+
+      subject { Elrio::ImageOptimizer.new(true) }
+
+      it "foo" do
+        optimized = subject.optimize(image, Elrio::Insets.new(24, 24, 24, 24))
+        optimized.should == expected
       end
     end
   end
