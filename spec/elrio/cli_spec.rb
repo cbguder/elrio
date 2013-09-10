@@ -12,6 +12,13 @@ describe Elrio::CLI do
       Elrio::Runner.stub(:new).and_return(runner)
     end
 
+    context "when run without a command" do
+      it "prints usage instructions" do
+        output.should_receive(:puts).with(/Usage: elrio <command> <images>/)
+        subject.run([])
+      end
+    end
+
     context "when run with the analyze command" do
       before do
         runner.stub(:analyze).and_return(Elrio::Insets.new(1, 2, 3, 4))
