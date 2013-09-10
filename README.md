@@ -21,7 +21,26 @@ Or install it yourself as:
 
 ## Usage
 
-    $ elrio IMAGE
+  To get the resizable cap insets for an asset:
+
+    $ elrio analyze image.png
+
+  To create an optimized version of the asset:
+
+    $ elrio optimize image.png
+
+## Example
+
+  When run with this image:
+
+  ![Source Image](https://raw.github.com/cbguder/elrio/master/spec/fixtures/original.png)
+
+    $ elrio optimize image.png
+    image.png: [48, 48, 48, 48] # Top, Left, Bottom, Right
+
+  This optimized version is written to `image-optimized.png`:
+
+  ![Source Image](https://raw.github.com/cbguder/elrio/master/spec/fixtures/optimized.png)
 
 ## Contributing
 
