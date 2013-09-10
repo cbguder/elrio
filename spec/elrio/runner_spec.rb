@@ -13,7 +13,7 @@ describe Elrio::Runner do
 
   describe "#analyze" do
     context "with a non-retina image" do
-      let(:path) { "file/path.png" }
+      let(:path) { "file/path.png".freeze }
 
       before do
         Elrio::ImageOptimizer.should_receive(:new).with(false).and_return(image_optimizer)
@@ -25,7 +25,7 @@ describe Elrio::Runner do
     end
 
     context "with a retina image" do
-      let(:path) { "file/path@2x.png" }
+      let(:path) { "file/path@2x.png".freeze }
 
       before do
         Elrio::ImageOptimizer.should_receive(:new).with(true).and_return(image_optimizer)
@@ -43,7 +43,7 @@ describe Elrio::Runner do
     end
 
     context "with a non-retina image" do
-      let(:path) { "file/path.png" }
+      let(:path) { "file/path.png".freeze }
 
       before do
         Elrio::ImageOptimizer.should_receive(:new).with(false).and_return(image_optimizer)
@@ -56,7 +56,7 @@ describe Elrio::Runner do
     end
 
     context "with a retina image" do
-      let(:path) { "file/path@2x.png" }
+      let(:path) { "file/path@2x.png".freeze }
 
       before do
         Elrio::ImageOptimizer.should_receive(:new).with(true).and_return(image_optimizer)

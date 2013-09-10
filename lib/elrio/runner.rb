@@ -12,15 +12,16 @@ module Elrio
       retina = is_retina?(path)
 
       if retina
-        suffix = "-optimized@2x.png"
-        path.sub!(/@2x/, '')
+        opt_suffix = "-optimized@2x.png"
+        opt_base = path.sub(/@2x/, '')
       else
-        suffix = "-optimized.png"
+        opt_suffix = "-optimized.png"
+        opt_base = path
       end
 
       optimized_path = File.join(
-        File.dirname(path),
-        File.basename(path, ".*") + suffix
+        File.dirname(opt_base),
+        File.basename(opt_base, ".*") + opt_suffix
       )
 
       image = ChunkyPNG::Image.from_file(path)
