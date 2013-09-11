@@ -50,6 +50,11 @@ describe Elrio::ImageOptimizer do
         subject.optimize(image, insets)
         insets.should == Elrio::Insets.new(48, 48, 48, 48)
       end
+
+      it "returns nil if insets are too big" do
+        optimized = subject.optimize(image, Elrio::Insets.new(image.height, image.width, 0, 0))
+        optimized.should be_nil
+      end
     end
 
     context "in retina mode" do
@@ -66,6 +71,11 @@ describe Elrio::ImageOptimizer do
         insets = Elrio::Insets.new(24, 24, 24, 24)
         subject.optimize(image, insets)
         insets.should == Elrio::Insets.new(24, 24, 24, 24)
+      end
+
+      it "returns nil if insets are too big" do
+        optimized = subject.optimize(image, Elrio::Insets.new(image.height / 2, image.width / 2, 0, 0))
+        optimized.should be_nil
       end
     end
   end

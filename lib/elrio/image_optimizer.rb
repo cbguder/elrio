@@ -34,6 +34,8 @@ module Elrio
       target_height = insets.top + insets.bottom + repeatable_size
       target_width = insets.left + insets.right + repeatable_size
 
+      return nil if target_height > image.height || target_width > image.width
+
       source_x = image.width - insets.right
       source_y = image.height - insets.bottom
       target_x = target_width - insets.right

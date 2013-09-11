@@ -30,7 +30,7 @@ module Elrio
       insets = image_optimizer.detect_cap_insets(image)
 
       optimized = image_optimizer.optimize(image, insets)
-      optimized.save(optimized_path)
+      optimized.save(optimized_path) if optimized
 
       insets
     end
