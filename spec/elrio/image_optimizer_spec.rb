@@ -40,9 +40,15 @@ describe Elrio::ImageOptimizer do
     context "in non-retina mode" do
       let(:expected) { ChunkyPNG::Image.from_file("spec/fixtures/optimized.png") }
 
-      it "foo" do
+      it "produces the expected image" do
         optimized = subject.optimize(image, Elrio::Insets.new(48, 48, 48, 48))
         optimized.should == expected
+      end
+
+      it "does not modify the insets" do
+        insets = Elrio::Insets.new(48, 48, 48, 48)
+        subject.optimize(image, insets)
+        insets.should == Elrio::Insets.new(48, 48, 48, 48)
       end
     end
 
@@ -51,9 +57,15 @@ describe Elrio::ImageOptimizer do
 
       subject { Elrio::ImageOptimizer.new(true) }
 
-      it "foo" do
+      it "produces the expected image" do
         optimized = subject.optimize(image, Elrio::Insets.new(24, 24, 24, 24))
         optimized.should == expected
+      end
+
+      it "does not modify the insets" do
+        insets = Elrio::Insets.new(24, 24, 24, 24)
+        subject.optimize(image, insets)
+        insets.should == Elrio::Insets.new(24, 24, 24, 24)
       end
     end
   end

@@ -20,6 +20,7 @@ module Elrio
     end
 
     def optimize(image, insets)
+      insets = insets.dup
       repeatable_size = 1
 
       if @retina
