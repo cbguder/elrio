@@ -20,6 +20,8 @@ describe Elrio::ImageOptimizer do
     end
 
     context "in non-retina mode" do
+      subject { Elrio::ImageOptimizer.new(false) }
+
       it "passes the rows and columns to the detector" do
         subject.detect_cap_insets(image).should == Elrio::Insets.new(1, 2, 3, 4)
       end
@@ -39,6 +41,8 @@ describe Elrio::ImageOptimizer do
 
     context "in non-retina mode" do
       let(:expected) { ChunkyPNG::Image.from_file("spec/fixtures/optimized.png") }
+
+      subject { Elrio::ImageOptimizer.new(false) }
 
       it "produces the expected image" do
         optimized = subject.optimize(image, Elrio::Insets.new(48, 48, 48, 48))

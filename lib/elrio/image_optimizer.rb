@@ -1,6 +1,6 @@
 module Elrio
   class ImageOptimizer
-    def initialize(retina = false)
+    def initialize(retina)
       @retina = retina
     end
 
@@ -8,40 +8,24 @@ module Elrio
       insets = detect_cap_insets_in_pixels(image)
 
       if @retina
-        Insets.new(
-          (insets.top    + 1) / 2,
-          (insets.left   + 1) / 2,
-          (insets.bottom + 1) / 2,
-          (insets.right  + 1) / 2
-        )
+        halve_insets(insets)
       else
         insets
       end
     end
 
     def optimize(image, insets)
-      insets = insets.dup
-      repeatable_size = 1
+      insets = double_insets(insets) if @retina
+      target = target_size(insets)
 
-      if @retina
-        repeatable_size *= 2
-        insets.top *= 2
-        insets.left *= 2
-        insets.bottom *= 2
-        insets.right *= 2
-      end
-
-      target_height = insets.top + insets.bottom + repeatable_size
-      target_width = insets.left + insets.right + repeatable_size
-
-      return nil if target_height > image.height || target_width > image.width
+      return if target.height > image.height || target.width > image.width
 
       source_x = image.width - insets.right
       source_y = image.height - insets.bottom
-      target_x = target_width - insets.right
-      target_y = target_height - insets.bottom
+      target_x = target.width - insets.right
+      target_y = target.height - insets.bottom
 
-      optimized = ChunkyPNG::Image.new(target_width, target_height)
+      optimized = ChunkyPNG::Image.new(target.width, target.height)
 
       copy_rect(
         image,
@@ -105,6 +89,35 @@ module Elrio
           dest[dest_x, dest_y] = src[src_x, src_y]
         end
       end
+    end
+
+    def halve_insets(insets)
+      Insets.new(
+        (insets.top    + 1) / 2,
+        (insets.left   + 1) / 2,
+        (insets.bottom + 1) / 2,
+        (insets.right  + 1) / 2
+      )
+    end
+
+    def double_insets(insets)
+      Insets.new(
+        insets.top    * 2,
+        insets.left   * 2,
+        insets.bottom * 2,
+        insets.right  * 2
+      )
+    end
+
+    def target_size(insets)
+      height = insets.top + insets.bottom + repeatable_size
+      width = insets.left + insets.right + repeatable_size
+
+      Size.new(width, height)
+    end
+
+    def repeatable_size
+      @retina ? 2 : 1
     end
   end
 end
