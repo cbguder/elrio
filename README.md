@@ -2,9 +2,10 @@
 
 Cap inset detector & optimizer for resizable UIKit assets.
 
-<a href="http://badge.fury.io/rb/elrio"><img src="https://badge.fury.io/rb/elrio@2x.png" alt="Gem Version" height="18"></a>
-<a href="https://codeclimate.com/github/cbguder/elrio"><img src="https://codeclimate.com/github/cbguder/elrio.png" alt="Code Climate"></a>
 <a href="https://travis-ci.org/cbguder/elrio"><img src="https://travis-ci.org/cbguder/elrio.png" alt="Build Status"></a>
+<a href="https://codeclimate.com/github/cbguder/elrio"><img src="https://codeclimate.com/github/cbguder/elrio.png" alt="Code Climate"></a>
+<a href='https://gemnasium.com/cbguder/elrio'><img src="https://gemnasium.com/cbguder/elrio.png" alt="Dependency Status" /></a>
+<a href="http://badge.fury.io/rb/elrio"><img src="https://badge.fury.io/rb/elrio@2x.png" alt="Gem Version" height="18"></a>
 
 ## Installation
 
