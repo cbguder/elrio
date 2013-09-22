@@ -24,27 +24,29 @@ module Elrio
       source_y = image.height - insets.bottom
       target_x = target.width - insets.right
       target_y = target.height - insets.bottom
+      source_width = insets.left + repeatable_size
+      source_height = insets.top + repeatable_size
 
       optimized = ChunkyPNG::Image.new(target.width, target.height)
 
       copy_rect(
         image,
         optimized,
-        Rect.new(0, 0, insets.left + repeatable_size, insets.top + repeatable_size),
+        Rect.new(0, 0, source_width, source_height),
         Point.new(0, 0)
       )
 
       copy_rect(
         image,
         optimized,
-        Rect.new(source_x, 0, insets.right, insets.top + repeatable_size),
+        Rect.new(source_x, 0, insets.right, source_height),
         Point.new(target_x, 0)
       )
 
       copy_rect(
         image,
         optimized,
-        Rect.new(0, source_y, insets.left + repeatable_size, insets.bottom),
+        Rect.new(0, source_y, source_width, insets.bottom),
         Point.new(0, target_y)
       )
 
