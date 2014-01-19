@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Elrio::CapInsetDetector do
+describe Elrio::PatternDetector do
   describe "#detect_cap_insets" do
     it "returns the non-repeating prefix and suffix lengths of a collection" do
       data = %w(A - - - B C)

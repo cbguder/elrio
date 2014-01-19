@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe Elrio::ImageOptimizer do
   describe "#detect_cap_insets" do
-    let(:cap_inset_detector) { double(Elrio::CapInsetDetector) }
+    let(:cap_inset_detector) { double(Elrio::PatternDetector) }
     let(:image) { double(ChunkyPNG::Image) }
     let(:columns) { [double] * 5 }
     let(:rows) { [double] * 3 }
@@ -16,7 +16,7 @@ describe Elrio::ImageOptimizer do
       cap_inset_detector.stub(:detect_cap_insets).with(rows).and_return([1, 3])
       cap_inset_detector.stub(:detect_cap_insets).with(columns).and_return([2, 4])
 
-      Elrio::CapInsetDetector.stub(:new).and_return(cap_inset_detector)
+      Elrio::PatternDetector.stub(:new).and_return(cap_inset_detector)
     end
 
     context "in non-retina mode" do

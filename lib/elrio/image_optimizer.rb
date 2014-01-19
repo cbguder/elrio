@@ -66,7 +66,7 @@ module Elrio
       columns = (0...image.width).map {|x| image.column(x) }
       rows = (0...image.height).map {|y| image.row(y) }
 
-      detector = CapInsetDetector.new
+      detector = PatternDetector.new
 
       column_info = detector.detect_cap_insets(columns)
       row_info = detector.detect_cap_insets(rows)
