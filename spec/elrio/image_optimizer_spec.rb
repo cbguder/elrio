@@ -2,35 +2,26 @@ require "spec_helper"
 
 describe Elrio::ImageOptimizer do
   describe "#detect_cap_insets" do
-    let(:cap_inset_detector) { double(Elrio::PatternDetector) }
+    let(:cap_inset_detector) { double(Elrio::CapInsetDetector) }
     let(:image) { double(ChunkyPNG::Image) }
-    let(:columns) { [double] * 5 }
-    let(:rows) { [double] * 3 }
 
     before do
-      image.stub(:width).and_return(columns.count)
-      image.stub(:height).and_return(rows.count)
-      image.stub(:column) {|x| columns[x] }
-      image.stub(:row) {|x| rows[x] }
-
-      cap_inset_detector.stub(:detect_cap_insets).with(rows).and_return([1, 3])
-      cap_inset_detector.stub(:detect_cap_insets).with(columns).and_return([2, 4])
-
-      Elrio::PatternDetector.stub(:new).and_return(cap_inset_detector)
+      insets = Elrio::Insets.new(1, 2, 3, 4)
+      cap_inset_detector.stub(:detect_cap_insets).with(image).and_return(insets)
     end
 
-    context "in non-retina mode" do
-      subject { Elrio::ImageOptimizer.new(false) }
+    context "with a point size of 1" do
+      subject { Elrio::ImageOptimizer.new(1, cap_inset_detector) }
 
-      it "passes the rows and columns to the detector" do
+      it "returns the detected cap insets" do
         subject.detect_cap_insets(image).should == Elrio::Insets.new(1, 2, 3, 4)
       end
     end
 
-    context "in retina mode" do
-      subject { Elrio::ImageOptimizer.new(true) }
+    context "with a point size of 2" do
+      subject { Elrio::ImageOptimizer.new(2, cap_inset_detector) }
 
-      it "halves the cap insets" do
+      it "halves the detected cap insets" do
         subject.detect_cap_insets(image).should == Elrio::Insets.new(1, 1, 2, 2)
       end
     end
@@ -39,10 +30,10 @@ describe Elrio::ImageOptimizer do
   describe "#optimize" do
     let(:image) { ChunkyPNG::Image.from_file("spec/fixtures/original.png") }
 
-    context "in non-retina mode" do
+    context "with a point size of 1" do
       let(:expected) { ChunkyPNG::Image.from_file("spec/fixtures/optimized.png") }
 
-      subject { Elrio::ImageOptimizer.new(false) }
+      subject { Elrio::ImageOptimizer.new(1) }
 
       it "produces the expected image" do
         optimized = subject.optimize(image, Elrio::Insets.new(48, 48, 48, 48))
@@ -61,10 +52,10 @@ describe Elrio::ImageOptimizer do
       end
     end
 
-    context "in retina mode" do
+    context "with a point size of 2" do
       let(:expected) { ChunkyPNG::Image.from_file("spec/fixtures/optimized@2x.png") }
 
-      subject { Elrio::ImageOptimizer.new(true) }
+      subject { Elrio::ImageOptimizer.new(2) }
 
       it "produces the expected image" do
         optimized = subject.optimize(image, Elrio::Insets.new(24, 24, 24, 24))
