@@ -5,9 +5,30 @@ module Elrio
 
   Rect = Struct.new(:x, :y, :width, :height)
 
-  Insets = Struct.new(:top, :left, :bottom, :right) do
+  Pattern = Struct.new(:start, :end, :size)
+
+  Insets = Struct.new(:top, :left, :bottom, :right, :vertical_size, :horizontal_size) do
     def to_s
       [top, left, bottom, right].to_s
+    end
+
+    def *(factor)
+      Insets.new(
+        (factor * top).ceil,
+        (factor * left).ceil,
+        (factor * bottom).ceil,
+        (factor * right).ceil,
+        vertical_size,
+        horizontal_size
+      )
+    end
+
+    def /(factor)
+      self * (1.0 / factor)
+    end
+
+    def coerce(number)
+      [self, number]
     end
   end
 end

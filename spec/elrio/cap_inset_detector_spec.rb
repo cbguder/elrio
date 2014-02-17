@@ -15,15 +15,15 @@ describe Elrio::CapInsetDetector do
       image.stub(:column) { |x| columns[x] }
       image.stub(:row) { |x| rows[x] }
 
-      vertical_pattern = [1, 3]
-      horizontal_pattern = [2, 4]
+      vertical_pattern = Elrio::Pattern.new(1, 3, 5)
+      horizontal_pattern = Elrio::Pattern.new(2, 4, 6)
 
       pattern_detector.stub(:detect_pattern).with(rows).and_return(vertical_pattern)
       pattern_detector.stub(:detect_pattern).with(columns).and_return(horizontal_pattern)
     end
 
     it "passes the rows and columns to the detector" do
-      subject.detect_cap_insets(image).should == Elrio::Insets.new(1, 2, 3, 4)
+      subject.detect_cap_insets(image).should == Elrio::Insets.new(1, 2, 3, 4, 5, 6)
     end
   end
 end

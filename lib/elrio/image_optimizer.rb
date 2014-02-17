@@ -1,17 +1,6 @@
 module Elrio
   class ImageOptimizer
-    def initialize(point_size, cap_inset_detector = CapInsetDetector.new)
-      @cap_inset_detector = cap_inset_detector
-      @point_size = point_size
-    end
-
-    def detect_cap_insets(image)
-      pixel_insets = @cap_inset_detector.detect_cap_insets(image)
-      multiply_insets(pixel_insets, 1.0 / @point_size)
-    end
-
-    def optimize(image, point_insets)
-      pixel_insets = multiply_insets(point_insets, @point_size)
+    def optimize(image, pixel_insets)
       target = target_size(pixel_insets)
 
       return if target.height > image.height || target.width > image.width
@@ -20,8 +9,8 @@ module Elrio
       source_y = image.height - pixel_insets.bottom
       target_x = target.width - pixel_insets.right
       target_y = target.height - pixel_insets.bottom
-      source_width = pixel_insets.left + @point_size
-      source_height = pixel_insets.top + @point_size
+      source_width = pixel_insets.left + pixel_insets.horizontal_size
+      source_height = pixel_insets.top + pixel_insets.vertical_size
 
       optimized = ChunkyPNG::Image.new(target.width, target.height)
 
@@ -73,19 +62,10 @@ module Elrio
     end
 
     def target_size(insets)
-      height = insets.top + insets.bottom + @point_size
-      width = insets.left + insets.right + @point_size
+      height = insets.top + insets.bottom + insets.vertical_size
+      width = insets.left + insets.right + insets.horizontal_size
 
       Size.new(width, height)
-    end
-
-    def multiply_insets(insets, factor)
-      Insets.new(
-        (factor * insets.top).ceil,
-        (factor * insets.left).ceil,
-        (factor * insets.bottom).ceil,
-        (factor * insets.right).ceil
-      )
     end
   end
 end

@@ -21,7 +21,7 @@ describe Elrio::CLI do
 
     context "when run with the analyze command" do
       before do
-        runner.stub(:analyze).and_return(Elrio::Insets.new(1, 2, 3, 4))
+        runner.stub(:analyze).and_return(Elrio::Insets.new(1, 2, 3, 4, 5, 6))
       end
 
       it "prints the cap insets for each file" do
@@ -38,7 +38,7 @@ describe Elrio::CLI do
 
     context "when run with the optimize command" do
       before do
-        runner.stub(:optimize).and_return(Elrio::Insets.new(1, 2, 3, 4))
+        runner.stub(:optimize).and_return(Elrio::Insets.new(1, 2, 3, 4, 5, 6))
       end
 
       it "prints the cap insets for each file" do

@@ -12,10 +12,12 @@ module Elrio
       vertical_pattern = @pattern_detector.detect_pattern(rows)
 
       Insets.new(
-        vertical_pattern[0],
-        horizontal_pattern[0],
-        vertical_pattern[1],
-        horizontal_pattern[1]
+        vertical_pattern.start,
+        horizontal_pattern.start,
+        vertical_pattern.end,
+        horizontal_pattern.end,
+        vertical_pattern.size,
+        horizontal_pattern.size
       )
     end
   end
