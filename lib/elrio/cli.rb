@@ -1,17 +1,17 @@
 module Elrio
   class CLI
-    def initialize(output = $stdout)
+    def initialize(output = $stdout, runner = Runner.new)
       @output = output
+      @runner = runner
     end
 
     def run(args)
-      runner = Runner.new
       cmd = args.shift
 
       return usage unless cmd
 
       args.each do |path|
-        insets = runner.send(cmd, path)
+        insets = @runner.send(cmd, path)
         @output.puts "#{path}: #{insets}"
       end
     end

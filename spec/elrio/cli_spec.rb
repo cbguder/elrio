@@ -2,16 +2,11 @@ require "spec_helper"
 
 describe Elrio::CLI do
   let(:output) { double(:output) }
+  let(:runner) { double(Elrio::Runner) }
 
-  subject { Elrio::CLI.new(output) }
+  subject { Elrio::CLI.new(output, runner) }
 
   describe "#run" do
-    let(:runner) { double(Elrio::Runner) }
-
-    before do
-      Elrio::Runner.stub(:new).and_return(runner)
-    end
-
     context "when run without a command" do
       it "prints usage instructions" do
         output.should_receive(:puts).with(/Usage: elrio <command> <images>/)
