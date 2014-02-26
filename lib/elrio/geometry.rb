@@ -1,13 +1,15 @@
+require "values"
+
 module Elrio
-  Point = Struct.new(:x, :y)
+  Point = Value.new(:x, :y)
 
-  Size = Struct.new(:width, :height)
+  Size = Value.new(:width, :height)
 
-  Rect = Struct.new(:x, :y, :width, :height)
+  Rect = Value.new(:x, :y, :width, :height)
 
-  Pattern = Struct.new(:start, :end, :size)
+  Pattern = Value.new(:start, :end, :size)
 
-  Insets = Struct.new(:top, :left, :bottom, :right, :pattern_width, :pattern_height) do
+  class Insets < Value.new(:top, :left, :bottom, :right, :pattern_width, :pattern_height)
     def to_s
       [top, left, bottom, right].to_s
     end

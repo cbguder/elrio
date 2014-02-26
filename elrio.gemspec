@@ -23,4 +23,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec"
 
   spec.add_runtime_dependency "chunky_png"
+  spec.add_runtime_dependency "values"
 end
