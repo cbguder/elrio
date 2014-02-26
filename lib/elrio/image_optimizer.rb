@@ -9,8 +9,8 @@ module Elrio
       source_y = image.height - pixel_insets.bottom
       target_x = target.width - pixel_insets.right
       target_y = target.height - pixel_insets.bottom
-      source_width = pixel_insets.left + pixel_insets.horizontal_size
-      source_height = pixel_insets.top + pixel_insets.vertical_size
+      source_width = pixel_insets.left + pixel_insets.pattern_width
+      source_height = pixel_insets.top + pixel_insets.pattern_height
 
       optimized = ChunkyPNG::Image.new(target.width, target.height)
 
@@ -62,8 +62,8 @@ module Elrio
     end
 
     def target_size(insets)
-      height = insets.top + insets.bottom + insets.vertical_size
-      width = insets.left + insets.right + insets.horizontal_size
+      height = insets.top + insets.bottom + insets.pattern_height
+      width = insets.left + insets.right + insets.pattern_width
 
       Size.new(width, height)
     end

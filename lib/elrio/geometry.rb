@@ -7,7 +7,7 @@ module Elrio
 
   Pattern = Struct.new(:start, :end, :size)
 
-  Insets = Struct.new(:top, :left, :bottom, :right, :vertical_size, :horizontal_size) do
+  Insets = Struct.new(:top, :left, :bottom, :right, :pattern_width, :pattern_height) do
     def to_s
       [top, left, bottom, right].to_s
     end
@@ -18,8 +18,8 @@ module Elrio
         (factor * left).ceil,
         (factor * bottom).ceil,
         (factor * right).ceil,
-        vertical_size,
-        horizontal_size
+        pattern_width,
+        pattern_height
       )
     end
 

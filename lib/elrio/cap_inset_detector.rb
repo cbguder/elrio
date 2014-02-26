@@ -16,8 +16,8 @@ module Elrio
         horizontal_pattern.start,
         vertical_pattern.end,
         horizontal_pattern.end,
-        vertical_pattern.size,
-        horizontal_pattern.size
+        horizontal_pattern.size,
+        vertical_pattern.size
       )
     end
   end
