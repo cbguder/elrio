@@ -18,7 +18,6 @@ module Elrio
       image = ChunkyPNG::Image.from_file(path)
       scale = PointSize.from_filename(path)
       insets = @cap_inset_detector.detect_cap_insets(image)
-      point_insets = insets / scale
 
       optimized_image = @image_optimizer.optimize(image, insets)
 
@@ -27,7 +26,7 @@ module Elrio
         optimized_image.save(optimized_path)
       end
 
-      point_insets
+      insets / scale
     end
 
     private
