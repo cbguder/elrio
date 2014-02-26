@@ -16,12 +16,12 @@ describe Elrio::Runner do
   subject { Elrio::Runner.new(cap_inset_detector, image_optimizer) }
 
   describe "#analyze" do
-    it "returns the cap insets detected by the detector when point size is 1" do
+    it "returns the cap insets detected by the detector when scale is 1" do
       Elrio::PointSize.stub(:from_filename).with(path).and_return(1)
       subject.analyze(path).should == Elrio::Insets.new(1, 2, 3, 4, 5, 6)
     end
 
-    it "halves the cap insets detected by the detector when point size is 2" do
+    it "halves the cap insets detected by the detector when scale is 2" do
       Elrio::PointSize.stub(:from_filename).with(path).and_return(2)
       subject.analyze(path).should == Elrio::Insets.new(1, 1, 2, 2, 5, 6)
     end
@@ -34,12 +34,12 @@ describe Elrio::Runner do
         optimized.should_receive(:save).with("file/path-optimized.png")
       end
 
-      it "returns the cap insets detected by the optimizer when point size is 1" do
+      it "returns the cap insets detected by the optimizer when scale is 1" do
         Elrio::PointSize.stub(:from_filename).with(path).and_return(1)
         subject.optimize(path).should == Elrio::Insets.new(1, 2, 3, 4, 5, 6)
       end
 
-      it "halves the cap insets detected by the detector when point size is 2" do
+      it "halves the cap insets detected by the detector when scale is 2" do
         Elrio::PointSize.stub(:from_filename).with(path).and_return(2)
         subject.optimize(path).should == Elrio::Insets.new(1, 1, 2, 2, 5, 6)
       end

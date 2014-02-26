@@ -9,28 +9,34 @@ module Elrio
 
     def analyze(path)
       image = ChunkyPNG::Image.from_file(path)
-      point_size = PointSize.from_filename(path)
+      scale = PointSize.from_filename(path)
       insets = @cap_inset_detector.detect_cap_insets(image)
-      insets / point_size
+      insets / scale
     end
 
     def optimize(path)
       image = ChunkyPNG::Image.from_file(path)
-      point_size = PointSize.from_filename(path)
+      scale = PointSize.from_filename(path)
       insets = @cap_inset_detector.detect_cap_insets(image)
+      point_insets = insets / scale
 
-      opt_suffix = "-optimized.png"
-      opt_base = path
+      optimized_image = @image_optimizer.optimize(image, insets)
 
-      optimized_path = File.join(
-        File.dirname(opt_base),
-        File.basename(opt_base, ".*") + opt_suffix
+      if optimized_image
+        optimized_path = optimized_path_for(path)
+        optimized_image.save(optimized_path)
+      end
+
+      point_insets
+    end
+
+    private
+
+    def optimized_path_for(path)
+      File.join(
+        File.dirname(path),
+        File.basename(path, ".*") + "-optimized.png"
       )
-
-      optimized = @image_optimizer.optimize(image, insets)
-      optimized.save(optimized_path) if optimized
-
-      insets / point_size
     end
   end
 end
